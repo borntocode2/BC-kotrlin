@@ -1,6 +1,24 @@
 package com.example
 
-class StringCalculator {
+object StringCalculator {
+    fun getCalculateSumInString(str: String): Int{
+        checkNonDigit(str)
+
+        if (isCustomDelimiter(str))
+            return getSumWithDelimeter(str.substring(5), getCustomDelimiter(str))
+        else
+            return getCalculateSumInString(str)
+    }
+
+    private fun getSumWithDelimeter(str: String, delimeter: Char): Int {
+        return str.split(delimeter).sumOf { it.toInt() }
+    }
+
+    private fun getCustomDelimiter(str: String): Char {
+        if (!isCustomDelimiter(str)) throw IllegalArgumentException("Not a delimiter: $str")
+        else return str[2]
+    }
+
     private fun isCustomDelimiter(str: String): Boolean {
         if(str.length < 5){
             return false
@@ -11,7 +29,11 @@ class StringCalculator {
         return false
     }
 
-    private fun getCustomDelimiter(str: String): String {
-
+    private fun checkNonDigit(str: String){
+        for (i in str){
+            if (i !in '0'..'9'){
+                throw IllegalArgumentException("Invalid input: $str")
+            }
+        }
     }
 }
