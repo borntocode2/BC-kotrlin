@@ -5,7 +5,7 @@ object SimpleCalculator {
     fun subtract(a: Int, b: Int): Int = a - b
     fun multiply(a: Int, b: Int): Int = a * b
     fun divide(a: Int, b: Int): Int {
-        if (a == b) throw IllegalArgumentException("Division by zero")
+        if (b==0) throw IllegalArgumentException("Division by zero")
         return a / b
     }
 }
