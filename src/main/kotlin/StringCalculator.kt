@@ -6,15 +6,16 @@ object StringCalculator {
         val matchResult = regex.find(str)
         val stringNumbers: List<String>
 
+
         if(matchResult == null){
             stringNumbers = extractStringNumbersByRegularDelimeters(str)
         }else{
             stringNumbers = extractStringNumbersByCustomDelimeter(matchResult.groupValues[1], matchResult.groupValues[2])
         }
 
-        //TODO: stringNumbers가 음수거나, 숫자가 아닌 값이 들어있는지 예외 처리
-        //TODO: 예외에 통과됐다면, calculateSumByStringNumbers를 활용하여 output 출력
+        validateLegalInput(stringNumbers)
 
+        return calculateSumStringNumbers(stringNumbers)}
     }
 
     private fun extractStringNumbersByCustomDelimeter(delimeter: String, str: String): List<String>{
@@ -26,7 +27,11 @@ object StringCalculator {
         return str.split(":", ",")
     }
 
-    private fun calculateSumByStringNumbers(stringNumbers: String){
+    private fun calculateSumStringNumbers(stringNumbers: List<String>) = stringNumbers.sumOf{it.toInt()}
 
+
+    private fun validateLegalInput(stringNumbers: List<String>){
+        if (stringNumbers.isEmpty()){ return }
+        stringNumbers.map { it.toIntOrNull() ?: throw RuntimeException("잘못된 입력입니다.") }
     }
 }
